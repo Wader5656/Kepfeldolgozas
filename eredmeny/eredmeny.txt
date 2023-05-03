@@ -1,0 +1,6 @@
+46.030781745910645 -Béka np átlag
+108.00297236442566 -Béka stat átlag
+98.13024258613586-Főtér stat átlag
+25.499236583709717-Főtér stat median
+23.557515859603882-Koli np median
+24.876585960388184-Koli stat median
