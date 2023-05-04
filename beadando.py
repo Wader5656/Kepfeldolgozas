@@ -4,11 +4,15 @@ import glob
 import statistics as stat
 import time
 
+def mymean(lista):
+    return sum(lista)/len(lista)
+
 def main():
     start = time.time()
     #images = [cv2.imread(file) for file in glob.glob("D://programok//kepf//beka//beka*.jpg")]
-    images = [cv2.imread(file) for file in glob.glob("D://programok//kepf//fo//fo*.jpg")]
+    #images = [cv2.imread(file) for file in glob.glob("D://programok//kepf//fo//fo*.jpg")]
     #images = [cv2.imread(file) for file in glob.glob("D://programok//kepf//kep2//kep*.jpg")]
+    images = [cv2.imread(file) for file in glob.glob("D://programok//kepf//test//*.jpg")]
     img_res =  np.zeros((790, 1053, 3), dtype = "uint8")
     resized,separated,tmpb,tmpg,tmpr,pix = [],[],[],[],[],[]
   
@@ -29,10 +33,11 @@ def main():
                         tmpg.append(separated[l][k][i][j])
                     else:
                         tmpr.append(separated[l][k][i][j])
-            #pix.append([np.mean(tmpb),np.mean(tmpg),np.mean(tmpr)]) #44,7 sec kb 43.19708228111267
-            pix.append([stat.mean(tmpb),stat.mean(tmpg),stat.mean(tmpr)]) #1:40 min kb, de pontosabb 106.53578591346741
-            #pix.append([np.median(tmpb),np.median(tmpg),np.median(tmpr)]) #29 sec kb 69.17094326019287
-            #pix.append([stat.median(tmpb),stat.median(tmpg),stat.median(tmpr)]) #23 sec kb, gyorsabb és elvileg pontosabb 23.943387031555176
+            #pix.append([mymean(tmpb),mymean(tmpg),mymean(tmpr)])
+            #pix.append([np.mean(tmpb),np.mean(tmpg),np.mean(tmpr)]) #44,7 sec kb 
+            pix.append([stat.mean(tmpb),stat.mean(tmpg),stat.mean(tmpr)]) #1:40 min kb, de pontosabb 
+            #pix.append([np.median(tmpb),np.median(tmpg),np.median(tmpr)]) #29 sec kb 
+            #pix.append([stat.median(tmpb),stat.median(tmpg),stat.median(tmpr)]) #23 sec kb, gyorsabb és elvileg pontosabb
             tmpb,tmpg,tmpr = [],[],[]
 
     for i in range(0,790):
@@ -45,6 +50,24 @@ def main():
     print(end - start)
     cv2.imshow("kép",img_res)
     cv2.waitKey(0)
+
+    results = [cv2.imread(file) for file in glob.glob("D://programok//kepf//eredmeny//*.png")]
+    #46.030781745910645 -Béka np átlag
+    cv2.imshow("Beka np atlag",results[0])
+    cv2.waitKey(0)
+    #108.00297236442566 -Béka stat átlag
+    cv2.imshow("Beka stat atlag",results[1])
+    cv2.waitKey(0)
+    #98.13024258613586-Főtér stat átlag
+    cv2.imshow("Foter stat atlag",results[2])
+    cv2.waitKey(0)
+    #25.499236583709717-Főtér stat median
+    cv2.imshow("Foter stat median",results[3])
+    cv2.waitKey(0)
+    #23.557515859603882-Koli stat median
+    cv2.imshow("Koli Stat median",results[4])
+    cv2.waitKey(0)
+   
 
 main()
 
